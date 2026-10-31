@@ -217,14 +217,36 @@ export const Contact: React.FC<ContactProps> = ({ id = 'contact' }) => {
     const web3formsKey =
       import.meta.env.VITE_WEB3FORMS_KEY || 'ff99481f-9769-4929-adf1-cb02c91b1771';
 
+    const submissionDate = new Date();
+    const formattedDate = submissionDate.toLocaleDateString('en-IN', {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+    const formattedTime = submissionDate.toLocaleTimeString('en-IN', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    });
+
     const formDataPayload = new FormData();
     formDataPayload.append('access_key', web3formsKey);
-    formDataPayload.append('name', formData.name.trim());
-    formDataPayload.append('email', formData.email.trim());
-    formDataPayload.append('subject', `[Portfolio Contact] ${formData.subject.trim()}`);
-    formDataPayload.append('message', formData.message.trim());
-    formDataPayload.append('from_name', `${formData.name.trim()} (Portfolio)`);
-    formDataPayload.append('reply_to', formData.email.trim());
+    formDataPayload.append('from_name', 'Lekhraj Mahajan Portfolio');
+    formDataPayload.append(
+      'subject',
+      `[Portfolio Inquiry] ${formData.subject.trim()} — from ${formData.name.trim()}`
+    );
+    formDataPayload.append('replyto', formData.email.trim());
+    formDataPayload.append('Sender Name', formData.name.trim());
+    formDataPayload.append('Sender Email', formData.email.trim());
+    formDataPayload.append('Subject', formData.subject.trim());
+    formDataPayload.append('Message', formData.message.trim());
+    formDataPayload.append('Submission Time', `${formattedDate} at ${formattedTime} IST`);
+    formDataPayload.append(
+      'Platform',
+      'Lekhraj Mahajan Portfolio (lekhrajmahajanportfolio.netlify.app)'
+    );
 
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
@@ -504,37 +526,43 @@ export const Contact: React.FC<ContactProps> = ({ id = 'contact' }) => {
               <div
                 role="status"
                 aria-live="polite"
-                className="rounded-2xl border border-emerald-600/20 bg-emerald-500/10 p-4 sm:p-5 font-['Poppins'] text-xs sm:text-sm text-emerald-900"
+                className="relative overflow-hidden rounded-2xl border border-[#bf4a1a]/30 bg-[#161616] p-5 sm:p-6 text-[#e5e3dc] shadow-[0_12px_32px_rgba(22,22,22,0.25)]"
               >
-                <div className="flex items-start gap-3">
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="size-6 text-emerald-600 shrink-0 mt-0.5"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2.2}
-                    aria-hidden="true"
-                  >
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      className="animate-checkmark-circle"
-                    />
-                    <path
-                      d="M7.5 12.5l3 3 6.5-6.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="animate-checkmark-check"
-                    />
-                  </svg>
-                  <div>
-                    <h4 className="font-bold uppercase tracking-wider text-emerald-800">
-                      Message Sent Successfully!
-                    </h4>
-                    <p className="mt-1 text-emerald-800/80 leading-relaxed">
+                <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#bf4a1a]" />
+                <div className="flex items-start gap-4">
+                  <div className="size-10 rounded-full bg-[#bf4a1a]/15 border border-[#bf4a1a]/40 text-[#bf4a1a] flex items-center justify-center shrink-0 mt-0.5">
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="size-5 text-[#bf4a1a]"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2.5}
+                      aria-hidden="true"
+                    >
+                      <circle
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        className="animate-checkmark-circle"
+                      />
+                      <path
+                        d="M7.5 12.5l3 3 6.5-6.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="animate-checkmark-check"
+                      />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="inline-block size-2 rounded-full bg-[#bf4a1a] animate-pulse" />
+                      <h4 className="font-['Big_Shoulders_Display',sans-serif] text-xl sm:text-2xl font-black uppercase tracking-wide text-white">
+                        MESSAGE SENT SUCCESSFULLY!
+                      </h4>
+                    </div>
+                    <p className="mt-1 font-['Poppins'] text-xs sm:text-sm text-[#e5e3dc]/85 leading-relaxed">
                       Thank you for reaching out! Your message has been sent directly to{' '}
-                      <span className="font-bold underline">
+                      <span className="font-bold text-[#bf4a1a] underline decoration-[#bf4a1a]/50 underline-offset-2">
                         {contactData.email}
                       </span>
                       . I will review it and get back to you shortly.
@@ -548,26 +576,24 @@ export const Contact: React.FC<ContactProps> = ({ id = 'contact' }) => {
               <div
                 role="status"
                 aria-live="polite"
-                className="rounded-2xl border border-red-500/20 bg-red-500/10 p-4 sm:p-5 font-['Poppins'] text-xs sm:text-sm text-red-900"
+                className="relative overflow-hidden rounded-2xl border border-[#bf4a1a]/40 bg-[#161616] p-5 sm:p-6 text-[#e5e3dc] shadow-[0_12px_32px_rgba(22,22,22,0.25)]"
               >
-                <div className="flex items-start gap-3">
-                  <AlertCircle className="size-5 text-red-600 shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="font-bold uppercase tracking-wider text-red-800">
-                      Submission Notice
+                <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#bf4a1a]" />
+                <div className="flex items-start gap-4">
+                  <div className="size-10 rounded-full bg-[#bf4a1a]/15 border border-[#bf4a1a]/40 text-[#bf4a1a] flex items-center justify-center shrink-0 mt-0.5">
+                    <AlertCircle className="size-5 text-[#bf4a1a]" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-['Big_Shoulders_Display',sans-serif] text-xl sm:text-2xl font-black uppercase tracking-wide text-white">
+                      SUBMISSION NOTICE
                     </h4>
-                    <p className="mt-1 text-red-800/80 leading-relaxed">
-                      {!import.meta.env.VITE_WEB3FORMS_KEY ? (
-                        <>
-                          Web3Forms Access Key is not yet configured in your <code className="font-mono bg-red-200/60 px-1 py-0.5 rounded text-red-950 font-bold">.env</code> file. Please add your key to enable instant email delivery, or email me directly at{' '}
-                          <span className="font-bold">{contactData.email}</span>.
-                        </>
-                      ) : (
-                        <>
-                          Could not complete transmission. Please click "COPY EMAIL" below or email me directly at{' '}
-                          <span className="font-bold">{contactData.email}</span>.
-                        </>
-                      )}
+                    <p className="mt-1 font-['Poppins'] text-xs sm:text-sm text-[#e5e3dc]/85 leading-relaxed">
+                      Could not complete instant delivery. Please click{' '}
+                      <strong className="text-white">"COPY EMAIL"</strong> below or reach out directly at{' '}
+                      <span className="font-bold text-[#bf4a1a] underline decoration-[#bf4a1a]/50 underline-offset-2">
+                        {contactData.email}
+                      </span>
+                      .
                     </p>
                   </div>
                 </div>
@@ -605,8 +631,8 @@ export const Contact: React.FC<ContactProps> = ({ id = 'contact' }) => {
               >
                 {copiedEmail ? (
                   <>
-                    <Check size={14} className="text-emerald-600" />
-                    <span className="text-emerald-700">COPIED!</span>
+                    <Check size={14} className="text-[#bf4a1a]" />
+                    <span className="text-[#bf4a1a]">COPIED!</span>
                   </>
                 ) : (
                   <>
