@@ -2,6 +2,16 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from '../../utils/gsapSetup';
 import { prefersReducedMotion } from '../../utils/motion';
 
+const getElementFromTarget = (target: EventTarget | null): HTMLElement | null => {
+  if (!target) return null;
+  if (target instanceof HTMLElement) return target;
+  if (target instanceof Element) return target as HTMLElement;
+  if ('parentElement' in target && (target as Node).parentElement) {
+    return (target as Node).parentElement as HTMLElement;
+  }
+  return null;
+};
+
 /**
  * Custom Animated Cursor with Magnetic Snapping & Difference Blend-Mode.
  * Features:
@@ -166,7 +176,7 @@ export const CustomCursor: React.FC = () => {
       xToInner(mouseX);
       yToInner(mouseY);
 
-      const rawTarget = e.target as HTMLElement | null;
+      const rawTarget = getElementFromTarget(e.target);
 
       // 1. If cursor is inside the Project Text Magnifier Zone, hide global cursor to show optical lens
       if (rawTarget?.closest('[data-magnify-zone="true"]')) {
@@ -309,7 +319,7 @@ export const CustomCursor: React.FC = () => {
 
     // Check hovered target for visual cursor state
     const handlePointerOver = (e: PointerEvent) => {
-      const target = e.target as HTMLElement | null;
+      const target = getElementFromTarget(e.target);
       if (!target) return;
 
       // Hide custom cursor over form inputs, textareas, contact form fields, and elements opting out
@@ -354,7 +364,7 @@ export const CustomCursor: React.FC = () => {
     };
 
     const handlePointerOut = (e: PointerEvent) => {
-      const target = e.target as HTMLElement | null;
+      const target = getElementFromTarget(e.target);
       if (!target) return;
 
       if (

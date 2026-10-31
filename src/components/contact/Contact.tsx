@@ -214,35 +214,22 @@ export const Contact: React.FC<ContactProps> = ({ id = 'contact' }) => {
     );
     const mailtoUrl = `mailto:${contactData.email}?subject=${mailtoSubject}&body=${mailtoBody}`;
 
-    const web3formsKey = import.meta.env.VITE_WEB3FORMS_KEY;
+    const web3formsKey =
+      import.meta.env.VITE_WEB3FORMS_KEY || 'ff99481f-9769-4929-adf1-cb02c91b1771';
 
-    if (!web3formsKey) {
-      try {
-        window.location.href = mailtoUrl;
-      } catch {
-        // Ignore navigation cancellation
-      }
-      setIsSubmitting(false);
-      setSubmissionStatus('error');
-      return;
-    }
+    const formDataPayload = new FormData();
+    formDataPayload.append('access_key', web3formsKey);
+    formDataPayload.append('name', formData.name.trim());
+    formDataPayload.append('email', formData.email.trim());
+    formDataPayload.append('subject', `[Portfolio Contact] ${formData.subject.trim()}`);
+    formDataPayload.append('message', formData.message.trim());
+    formDataPayload.append('from_name', `${formData.name.trim()} (Portfolio)`);
+    formDataPayload.append('reply_to', formData.email.trim());
 
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          access_key: web3formsKey,
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          subject: `[Portfolio Contact] ${formData.subject.trim()}`,
-          message: formData.message.trim(),
-          from_name: `${formData.name.trim()} (Portfolio)`,
-          reply_to: formData.email.trim(),
-        }),
+        body: formDataPayload,
       });
 
       const result = await response.json();
