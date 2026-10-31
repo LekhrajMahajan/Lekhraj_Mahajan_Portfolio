@@ -1,0 +1,154 @@
+/* ==========================================================================
+   Navbar Component Styles
+   ========================================================================== */
+
+.nav-link-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  font-family: 'Big Shoulders Display', 'Syne', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #161616;
+  text-decoration: none;
+  background-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  cursor: pointer;
+  border-radius: 9999px;
+  transition: color 0.3s ease;
+  z-index: 1;
+}
+
+/* Hover effect matches the Logo: transparent background, text inverts to white inside difference circle */
+.nav-link-item:hover,
+.nav-link-item:focus-visible {
+  color: #bf4a1a;
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+body.custom-cursor-active .nav-link-item:hover,
+body.custom-cursor-active .nav-link-item:focus-visible {
+  color: #161616 !important;
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+.nav-link-item:focus-visible {
+  outline: 2px solid #bf4a1a;
+  outline-offset: 3px;
+}
+
+/* Right Contact CTA Button */
+.nav-contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  border: 1px solid rgba(22, 22, 22, 0.2);
+  border-radius: 9999px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #161616;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.nav-contact-btn:hover,
+.nav-contact-btn:focus-visible {
+  border-color: #bf4a1a;
+  background-color: #bf4a1a;
+  color: #e5e3dc;
+}
+
+body.custom-cursor-active .nav-contact-btn:hover {
+  border-color: #161616;
+  background-color: transparent;
+  color: #161616;
+}
+
+.nav-contact-btn:focus-visible {
+  outline: 2px solid #bf4a1a;
+  outline-offset: 3px;
+}
+
+.nav-contact-btn .icon-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  background-color: #161616;
+  color: #e5e3dc;
+  transition: all 0.3s ease;
+}
+
+.nav-contact-btn:hover .icon-circle {
+  background-color: #e5e3dc;
+  color: #bf4a1a;
+  transform: rotate(45deg);
+}
+
+body.custom-cursor-active .nav-contact-btn .icon-circle {
+  background-color: transparent;
+  border: 1px solid rgba(22, 22, 22, 0.35);
+  color: #161616;
+}
+
+body.custom-cursor-active .nav-contact-btn:hover .icon-circle {
+  background-color: transparent;
+  border-color: #161616;
+  color: #161616;
+  transform: rotate(45deg);
+}
+
+/* Mobile Menu Animation */
+@keyframes mobile-drawer-fade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobile-menu-drawer {
+  animation: mobile-drawer-fade 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   Smart Navbar Auto-Hide / Show Animation
+   ═══════════════════════════════════════════════════════════════════ */
+
+.navbar-auto-hide {
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.3s ease,
+    padding 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+  will-change: transform;
+}
+
+/* Visible state — at normal position */
+.navbar--visible {
+  transform: translateY(0) !important;
+}
+
+/* Hidden state — slid completely above the viewport */
+.navbar--hidden {
+  transform: translateY(-115%) !important;
+  pointer-events: none !important;
+}

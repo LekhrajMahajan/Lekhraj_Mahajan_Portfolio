@@ -1,0 +1,28 @@
+/* ==========================================================================
+   Scroll Progress Floating Indicator
+   ========================================================================== */
+
+@keyframes float-subtle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.scroll-indicator-float {
+  animation: float-subtle 4s ease-in-out infinite;
+}
+
+@media (max-width: 640px) {
+  .scroll-indicator-float {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-indicator-float {
+    animation: none !important;
+  }
+}

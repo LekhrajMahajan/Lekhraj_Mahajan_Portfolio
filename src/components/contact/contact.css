@@ -1,0 +1,35 @@
+/* ==========================================================================
+   Contact Section Polish Styles
+   ========================================================================== */
+
+/* Success Checkmark Stroke-Draw Animation */
+@keyframes checkmark-circle {
+  0% {
+    stroke-dashoffset: 63;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes checkmark-check {
+  0% {
+    stroke-dashoffset: 20;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-checkmark-circle {
+  stroke-dasharray: 63;
+  stroke-dashoffset: 63;
+  animation: checkmark-circle 0.45s ease-out forwards;
+}
+
+.animate-checkmark-check {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  animation: checkmark-check 0.4s 0.25s ease-out forwards;
+}
+

@@ -1,0 +1,260 @@
+/* ==========================================================================
+   Hero Section Styles (2026 Edition)
+   ========================================================================== */
+
+/* Eyebrow badge */
+.hero-eyebrow {
+  font-family: var(--font-poppins, 'Poppins', sans-serif);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #212428;
+}
+
+/* Heading with Big Shoulders Display (aligned with loader voice) */
+.hero-heading {
+  font-family: var(--font-soldier, 'Big Shoulders Display', sans-serif);
+  font-weight: 900;
+  line-height: 0.92;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: #161616;
+}
+
+/* Masked Slide Swap Role Container */
+.hero-role-wrapper {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-soldier, 'Big Shoulders Display', sans-serif);
+  font-size: clamp(22px, 5vw, 50px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #161616;
+  line-height: 1;
+  max-width: 100%;
+}
+
+.hero-role-slider {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  padding-bottom: 2px;
+  max-width: 100%;
+}
+
+.hero-role-item {
+  display: inline-block;
+  white-space: nowrap;
+  line-height: 1.15;
+  transform-origin: 50% 50%;
+}
+
+/* Description paragraph */
+.hero-description {
+  font-family: var(--font-poppins, 'Poppins', sans-serif);
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.7;
+  color: rgba(45, 46, 48, 0.78);
+  max-width: 490px;
+}
+
+/* Hero Interactive CTA Buttons */
+.hero-contact-button,
+.hero-download-cv {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(22, 22, 22, 0.4);
+  border-radius: 9999px;
+  padding: 8px 24px;
+  font-family: var(--font-poppins, 'Poppins', sans-serif);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #161616;
+  text-decoration: none;
+  background: transparent;
+  position: relative;
+  cursor: pointer;
+  z-index: 1;
+  transition: border-color 0.25s ease;
+}
+
+/* Bottom underline bar on hover */
+.hero-contact-button::after,
+.hero-download-cv::after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 4px;
+  height: 3px;
+  background-color: #161616;
+  border-radius: 9999px;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hero-contact-button:hover::after,
+.hero-contact-button:focus-visible::after,
+.hero-download-cv:hover::after,
+.hero-download-cv:focus-visible::after {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.hero-contact-button:hover,
+.hero-contact-button:focus-visible,
+.hero-download-cv:hover,
+.hero-download-cv:focus-visible {
+  border-color: #161616;
+}
+
+.hero-contact-button:focus-visible,
+.hero-download-cv:focus-visible {
+  outline: 2px solid #bf4a1a;
+  outline-offset: 3px;
+}
+
+/* Standalone Social Icon Link (Clean vector icons without circle border/background) */
+.hero-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  color: #161616;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.hero-social-link:hover,
+.hero-social-link:focus-visible {
+  color: #000000;
+  transform: translateY(-2px) scale(1.15);
+}
+
+body.custom-cursor-active .hero-social-link:hover,
+body.custom-cursor-active .hero-social-link:focus-visible {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: #000000;
+}
+
+.hero-social-link:focus-visible {
+  outline: 2px solid #bf4a1a;
+  outline-offset: 4px;
+}
+
+/* Legacy Social Icon Button fallback */
+.hero-social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  border: 1px solid rgba(22, 22, 22, 0.15);
+  background-color: rgba(229, 227, 220, 0.6);
+  color: #161616;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+.hero-social-btn:hover,
+.hero-social-btn:focus-visible {
+  background-color: #bf4a1a;
+  border-color: #bf4a1a;
+  color: #e5e3dc;
+  box-shadow: 0 8px 20px rgba(191, 74, 26, 0.3);
+}
+
+body.custom-cursor-active .hero-social-btn:hover {
+  background-color: transparent;
+  border-color: #161616;
+  color: #161616;
+  box-shadow: none;
+}
+
+.hero-social-btn:focus-visible {
+  outline: 2px solid #bf4a1a;
+  outline-offset: 3px;
+}
+
+/* Right column photo composition */
+#bannerPhoto {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+@media (min-width: 1024px) {
+  #bannerPhoto {
+    justify-content: flex-end;
+  }
+}
+
+#bannerPhoto img {
+  width: 100%;
+  height: auto;
+  max-height: 82vh;
+  object-fit: contain;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+#bannerPhoto:hover img {
+  transform: scale(1.02);
+}
+
+/* Background Soft Cursor Spotlight */
+.hero-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    650px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(191, 74, 26, 0.08),
+    transparent 65%
+  );
+  z-index: 1;
+}
+
+/* Subtle Static Grain Overlay (inline SVG feTurbulence, non-animated) */
+.hero-grain-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  z-index: 2;
+}
+
+/* Accessibility: reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-spotlight,
+  .hero-grain-overlay {
+    display: none;
+  }
+  .hero-contact-button,
+  .hero-download-cv,
+  .hero-contact-button::after,
+  .hero-download-cv::after,
+  .hero-social-btn {
+    transition: none !important;
+    transform: none !important;
+  }
+}

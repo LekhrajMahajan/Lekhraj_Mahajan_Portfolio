@@ -1,0 +1,242 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --black-color: #161616;
+    --white-color: #e5e3dc;
+    --orange-accent: #bf4a1a;
+    --second-color: #212121;
+    --font-soldier: 'Big Shoulders Display', 'Syne', sans-serif;
+    --font-poppins: 'Poppins', 'Inter', sans-serif;
+    /* Calibrated dwell height for About Me panel:
+       About settles at ~23% and the Skills curtain starts sliding up promptly at ~25% */
+    --about-panel-height: 102vh;
+  }
+
+  html {
+    background-color: var(--white-color);
+    color: var(--black-color);
+    font-family: var(--font-poppins);
+  }
+
+  html.lenis, html.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  body {
+    background-color: var(--white-color);
+    background-image: url('/assets/topography.svg');
+    background-repeat: repeat;
+    background-size: 600px 600px;
+    color: var(--black-color);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background-color: #bf4a1a;
+    color: #ffffff;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   CURTAIN STACKING EFFECT
+   Sections pin at the top of the viewport via position: sticky.
+   Each subsequent panel has a higher z-index so it naturally
+   slides up from below and covers the previous section like
+   a theatrical curtain.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════════
+   CURTAIN STACKING EFFECT (Responsive on Mobile, Tablet & Desktop)
+   Desktop (>= 1024px): Sections pin at top: 0 with calibrated dwell.
+   Mobile/Tablet (< 1024px): Sections pin at min(0px, calc(100svh - 100%)),
+   meaning the user scrolls through and views 100% of the section's content
+   first ("proper dikhe"), and ONLY THEN does the panel stick while the next
+   section slides up like a theatrical curtain with depth scale!
+   ═══════════════════════════════════════════════════════════════════ */
+
+.curtain-stack-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.curtain-panel {
+  position: sticky;
+  top: var(--panel-sticky-top, 0px);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Layer 1: CreativeCTA — sits at the bottom of the stack */
+.curtain-panel--1 {
+  z-index: 1;
+}
+
+/* Layer 2: About Me — slides up and covers CreativeCTA like an elevated curtain */
+.curtain-panel--2 {
+  z-index: 2;
+  box-shadow: 0 -22px 55px -12px rgba(0, 0, 0, 0.2), 0 -6px 20px -4px rgba(0, 0, 0, 0.08);
+  border-top: 1px solid rgba(22, 22, 22, 0.06);
+  background-color: #e5e3dc;
+  background-image: url('/assets/topography.svg');
+  background-repeat: repeat;
+  background-size: 600px 600px;
+}
+
+/* Layer 3: Skills — slides up and covers About like an elevated curtain */
+.curtain-panel--3 {
+  z-index: 3;
+  box-shadow: 0 -22px 55px -12px rgba(0, 0, 0, 0.2), 0 -6px 20px -4px rgba(0, 0, 0, 0.08);
+  border-top: 1px solid rgba(22, 22, 22, 0.06);
+}
+
+@media (min-width: 1024px) {
+  .curtain-panel {
+    top: 0;
+  }
+  .curtain-panel--2 {
+    min-height: var(--about-panel-height);
+  }
+  .curtain-panel > section {
+    min-height: 100vh;
+  }
+}
+
+@media (max-width: 1023px) {
+  .curtain-panel {
+    top: var(--panel-sticky-top, 0px);
+  }
+  .curtain-panel--2,
+  .curtain-panel--3 {
+    box-shadow: 0 -14px 35px rgba(0, 0, 0, 0.14);
+  }
+}
+
+/* Selected Work Project Cards: Stacking & Depth Effect on All Devices */
+.project-card-stack-item {
+  position: sticky;
+  top: var(--card-sticky-top, calc(var(--card-stack-base, 78px) + calc(var(--card-index, 0) * var(--card-stack-step, 24px))));
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+@media (max-width: 1023px) {
+  .project-card-stack-item {
+    top: var(--card-sticky-top, 60px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .project-card-stack-item {
+    top: calc(var(--card-stack-base, 78px) + calc(var(--card-index, 0) * var(--card-stack-step, 24px)));
+  }
+}
+
+/* Ensure curtain panels 2 & 3 carry the authentic topography pattern when sliding over dark sections */
+.curtain-panel--2 > section,
+.curtain-panel--3 > section {
+  background-color: #e5e3dc;
+  background-image: url('/assets/topography.svg');
+  background-repeat: repeat;
+  background-size: 600px 600px;
+}
+
+/* Reusable class for sections and containers */
+.bg-topo-pattern {
+  background-color: #e5e3dc;
+  background-image: url('/assets/topography.svg');
+  background-repeat: repeat;
+  background-size: 600px 600px;
+}
+
+/* On mobile, reduce the shadow intensity */
+@media (max-width: 768px) {
+  .curtain-panel--2,
+  .curtain-panel--3 {
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* Respect reduced motion — disable sticky stacking */
+@media (prefers-reduced-motion: reduce) {
+  .curtain-panel {
+    position: relative;
+    top: auto;
+  }
+  .curtain-panel--2,
+  .curtain-panel--3 {
+    box-shadow: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   CUSTOM ANIMATED & MAGNETIC CURSOR
+   Hides default system cursor on fine pointer desktop devices when
+   custom animated cursor is initialized.
+   ═══════════════════════════════════════════════════════════════════ */
+@media (pointer: fine) {
+  body.custom-cursor-active,
+  body.custom-cursor-active a,
+  body.custom-cursor-active button,
+  body.custom-cursor-active [role="button"],
+  body.custom-cursor-active .hero-social-btn,
+  body.custom-cursor-active .hero-contact-button,
+  body.custom-cursor-active .hero-download-cv,
+  body.custom-cursor-active .nav-contact-btn {
+    cursor: none !important;
+  }
+
+  body.custom-cursor-active input,
+  body.custom-cursor-active textarea,
+  body.custom-cursor-active select,
+  body.custom-cursor-active [contenteditable],
+  body.custom-cursor-active [data-no-cursor="true"],
+  body.custom-cursor-active [data-no-cursor="true"] *,
+  body.custom-cursor-active a[data-no-cursor="true"],
+  body.custom-cursor-active a.no-magnetic,
+  body.custom-cursor-active .no-magnetic,
+  body.custom-cursor-active .contact-field-wrap,
+  body.custom-cursor-active .contact-field-wrap * {
+    cursor: auto !important;
+  }
+
+  body.custom-cursor-active a[data-no-cursor="true"],
+  body.custom-cursor-active a.no-magnetic,
+  body.custom-cursor-active .no-magnetic {
+    cursor: pointer !important;
+  }
+
+  body.custom-cursor-active input,
+  body.custom-cursor-active textarea {
+    cursor: text !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE STACKING CARDS (Deck Effect for Mobile, Tablet, Desktop)
+   ═══════════════════════════════════════════════════════════════════ */
+.project-card-stack-item {
+  --card-stack-base: 72px;
+  --card-stack-step: 18px;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+@media (min-width: 640px) {
+  .project-card-stack-item {
+    --card-stack-base: 76px;
+    --card-stack-step: 22px;
+  }
+}
+@media (min-width: 1024px) {
+  .project-card-stack-item {
+    --card-stack-base: 80px;
+    --card-stack-step: 24px;
+  }
+}

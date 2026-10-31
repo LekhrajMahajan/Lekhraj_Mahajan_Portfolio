@@ -1,0 +1,15 @@
+/* Creative CTA Banner Animations & Styling */
+
+.creative-cta-marquee-track-left,
+.creative-cta-marquee-track-right {
+  display: flex;
+  width: max-content;
+}
+
+/* Reduced motion preference: static strip */
+@media (prefers-reduced-motion: reduce) {
+  .creative-cta-marquee-track-left,
+  .creative-cta-marquee-track-right {
+    transform: none !important;
+  }
+}

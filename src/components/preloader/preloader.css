@@ -1,0 +1,268 @@
+/* ==========================================================================
+   Editorial Preloader Styles (2026 Edition)
+   ========================================================================== */
+
+:root {
+  --loader-black: #161616;
+  --loader-white: #e5e3dc;
+  --loader-orange: #bf4a1a;
+  --loader-cream-muted: rgba(229, 227, 220, 0.65);
+  --loader-border-subtle: rgba(229, 227, 220, 0.12);
+}
+
+/* Scroll prevention while preloader is active */
+html.scroll-hide,
+body.scroll-hide {
+  overflow: hidden !important;
+  height: 100% !important;
+  touch-action: none;
+}
+
+/* Full-screen fixed container */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background-color: var(--loader-black);
+  color: var(--loader-white);
+  pointer-events: all;
+}
+
+/* Atmospheric background with subtle radial glows and grid */
+.loader-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 25%, rgba(191, 74, 26, 0.22), transparent 35%),
+    radial-gradient(circle at 80% 75%, rgba(229, 227, 220, 0.08), transparent 30%),
+    linear-gradient(135deg, #161616 0%, #1c1c1c 100%);
+}
+
+.loader-bg::before {
+  content: "";
+  position: absolute;
+  inset: 20px;
+  border: 1px solid rgba(229, 227, 220, 0.06);
+  border-radius: 28px;
+  pointer-events: none;
+}
+
+.loader-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+  background-image:
+    linear-gradient(rgba(229, 227, 220, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(229, 227, 220, 0.15) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 72%);
+  mask-image: radial-gradient(circle at center, black 0%, transparent 72%);
+  pointer-events: none;
+}
+
+/* Dual curtain exit wipe layer */
+.loader-reveal {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  transform: translateY(100%);
+  background-color: var(--loader-white);
+  pointer-events: none;
+}
+
+/* Central interactive shell containing the orbit and brand */
+.loader-shell {
+  position: relative;
+  z-index: 3;
+  width: min(92vw, 540px);
+  height: min(92vw, 540px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* Orbit SVG Container */
+.loader-orbit-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.loader-orbit-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Thin dashed inner ring with slow counter-rotation */
+.loader-inner-ring {
+  transform-origin: 220px 220px;
+  animation: loader-spin-counter 38s linear infinite;
+}
+
+@keyframes loader-spin-counter {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/* Tip glowing orange dot */
+.loader-tip-dot {
+  filter: drop-shadow(0 0 8px rgba(191, 74, 26, 0.95)) drop-shadow(0 0 16px rgba(191, 74, 26, 0.7));
+}
+
+/* Brand typography and text entrance */
+.loader-brand {
+  position: relative;
+  z-index: 4;
+  text-align: center;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-tagline {
+  font-family: var(--font-poppins, 'Poppins', sans-serif);
+  font-size: clamp(10px, 1.8vw, 12px);
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--loader-orange);
+  margin-bottom: 15px;
+}
+
+/* Stacked Two-Line Name */
+.loader-title-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+
+.loader-name-line {
+  position: relative;
+  overflow: visible;
+  line-height: 0.90;
+  padding: 4px 12px;
+}
+
+.loader-name-outline,
+.loader-name-fill {
+  font-family: var(--font-soldier, 'Big Shoulders Display', sans-serif);
+  font-size: clamp(54px, 13vw, 102px);
+  font-weight: 800;
+  line-height: 0.90;
+  text-transform: uppercase;
+  letter-spacing: -0.015em;
+  display: block;
+}
+
+.loader-name-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(229, 227, 220, 0.82);
+}
+
+.loader-name-fill {
+  position: absolute;
+  inset: 0;
+  padding: 4px 12px;
+  color: var(--loader-white);
+  -webkit-text-stroke: 1px transparent;
+  pointer-events: none;
+}
+
+/* Bottom Controls: Status on Left, Rolling Counter on Right */
+.loader-footer-meta {
+  position: absolute;
+  left: 36px;
+  right: 36px;
+  bottom: 28px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  user-select: none;
+  z-index: 4;
+}
+
+/* Status Text on Left with quick masked text swap */
+.loader-status-container {
+  overflow: hidden;
+  height: 22px;
+  display: flex;
+  align-items: center;
+}
+
+.loader-status-text {
+  font-family: var(--font-poppins, 'Poppins', sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--loader-cream-muted);
+  display: block;
+}
+
+/* Large Rolling-Digit Counter (3 digit columns 0-9, translateY, tabular-nums) */
+.loader-counter-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 1px;
+  font-family: var(--font-soldier, 'Big Shoulders Display', sans-serif);
+  font-size: clamp(38px, 6vw, 56px);
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--loader-white);
+}
+
+.loader-digit-col {
+  height: 1em;
+  overflow: hidden;
+  position: relative;
+  width: 0.6em;
+  display: inline-block;
+}
+
+.loader-digit-strip {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.12s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.loader-digit-val {
+  height: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-counter-pct {
+  font-size: 0.45em;
+  font-weight: 700;
+  color: var(--loader-orange);
+  margin-left: 2px;
+}
+
+/* Accessibility: Prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .loader-inner-ring {
+    animation: none !important;
+  }
+  .loader-digit-strip {
+    transition: none !important;
+  }
+}
