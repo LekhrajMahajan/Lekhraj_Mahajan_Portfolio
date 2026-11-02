@@ -1,9 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="100" fill="#141414" stroke="#2b2b2b" stroke-width="12"/>
   <g transform="translate(93, 61)">
     <!-- Top vertical stem with semicircle cap & 45-degree angled bottom -->
-    <path d="M 10,65 A 55,55 0 0,1 120,65 L 120,250 L 10,360 Z" fill="#f4f3ef"/>
+    <path d="M 10,65 A 55,55 0 0,1 120,65 L 120,250 L 10,360 Z" fill="#ffffff"/>
     <!-- Bottom horizontal foot with 45-degree angled corner & semicircle right tip -->
-    <path d="M 30,380 L 140,270 L 260,270 A 55,55 0 0,1 260,380 Z" fill="#bf4a1a"/>
+    <path d="M 30,380 L 140,270 L 260,270 A 55,55 0 0,1 260,380 Z" fill="#ffffff"/>
   </g>
 </svg>

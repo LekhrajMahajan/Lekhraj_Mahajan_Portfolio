@@ -214,7 +214,7 @@ export const ProfileStatsCard: React.FC<ProfileStatsCardProps> = ({
           href={githubUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex size-9 sm:size-10 shrink-0 items-center justify-center rounded-full border border-[#e5e3dc]/15 bg-[#e5e3dc]/10 text-[#e5e3dc] transition-all duration-300 hover:bg-[#bf4a1a] hover:border-[#bf4a1a] hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#bf4a1a]"
+          className="flex size-9 sm:size-10 shrink-0 items-center justify-center rounded-full border border-[#e5e3dc]/15 bg-[#e5e3dc]/10 text-[#e5e3dc] transition-all duration-300 hover:bg-white hover:border-white hover:text-black hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
           aria-label="Open GitHub Profile"
         >
           <ArrowUpRight size={16} strokeWidth={2.2} />

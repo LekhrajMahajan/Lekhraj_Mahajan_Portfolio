@@ -205,10 +205,14 @@ body.custom-cursor-active .hero-social-btn:hover {
 @media (min-width: 1024px) {
   #bannerPhoto {
     justify-content: flex-end;
+    align-self: flex-end;
   }
 }
 
 #bannerPhoto img {
+  display: block;
+  vertical-align: bottom;
+  margin-bottom: 0;
   width: 100%;
   height: auto;
   max-height: 82vh;

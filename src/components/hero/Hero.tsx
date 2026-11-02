@@ -97,9 +97,9 @@ export const Hero: React.FC<HeroProps> = ({
       const normX = (e.clientX / innerWidth - 0.5) * 2;
       const normY = (e.clientY / innerHeight - 0.5) * 2;
 
-      // +-12px max for portrait cutout
-      xToPortrait(normX * 12);
-      yToPortrait(normY * 12);
+      // Smooth subtle horizontal parallax for portrait cutout while keeping bottom edge grounded
+      xToPortrait(normX * 14);
+      yToPortrait(0);
 
       // Slower, wider parallax for the ambient orange glow behind (+-22px)
       if (xToGlow && yToGlow) {
@@ -284,7 +284,7 @@ export const Hero: React.FC<HeroProps> = ({
     <section
       id="home"
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center pt-28 pb-16 md:pt-36 md:pb-24 lg:pt-32 overflow-hidden bg-transparent text-[#161616]"
+      className="relative w-full flex items-end justify-center pt-24 sm:pt-28 md:pt-32 lg:pt-32 pb-0 overflow-hidden bg-transparent text-[#161616]"
       aria-label="Hero Section"
     >
       {/* Subtle Static Grain Overlay */}
@@ -301,11 +301,11 @@ export const Hero: React.FC<HeroProps> = ({
       />
 
       <div className="max-w-384 w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-end">
           {/* ================================================================
               LEFT COLUMN: Editorial Copy, Role Slider, CTAs, Socials
               ================================================================ */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left z-10">
+          <div className="lg:col-span-7 flex flex-col items-start text-left z-10 pb-8 sm:pb-12 lg:pb-14">
             {/* 1. Eyebrow */}
             <p ref={eyebrowRef} className="hero-eyebrow mb-3">
               {portfolioData.eyebrow}
@@ -384,19 +384,19 @@ export const Hero: React.FC<HeroProps> = ({
           </div>
 
           {/* ================================================================
-              RIGHT COLUMN: Cutout Portrait with Parallax
+              RIGHT COLUMN: Cutout Portrait with Parallax (Touches Bottom Section)
               ================================================================ */}
           <div
             ref={portraitRef}
             id="bannerPhoto"
-            className="lg:col-span-5 flex justify-center lg:justify-end items-end relative w-full pt-4 lg:pt-0 z-10"
+            className="lg:col-span-5 flex justify-center lg:justify-end items-end relative w-full pt-4 lg:pt-0 z-10 self-end -mb-0.5"
           >
             <img
               src={portfolioData.portraitImage}
               alt={portfolioData.portraitAlt}
               width={640}
               height={720}
-              className="w-full max-w-125 sm:max-w-140 lg:max-w-155 xl:max-w-165 h-auto object-contain select-none pointer-events-none drop-shadow-[0_20px_45px_rgba(191,74,26,0.18)]"
+              className="w-full max-w-125 sm:max-w-140 lg:max-w-155 xl:max-w-165 h-auto object-contain block align-bottom select-none pointer-events-none drop-shadow-[0_20px_45px_rgba(191,74,26,0.18)]"
               loading="eager"
               fetchPriority="high"
               decoding="async"

@@ -8,8 +8,9 @@ export interface ProjectItem {
   description: string;
   highlights: string[];
   technologies: string[];
-  image: string;
-  imageAlt: string;
+  image?: string;
+  imageAlt?: string;
+  video?: string;
   liveUrl?: string;
   repositoryUrl?: string;
   scrollPreview?: boolean;
@@ -55,9 +56,7 @@ export const selectedWorkData: SelectedWorkData = {
         'Zustand',
         'Tailwind CSS',
       ],
-      image: '/assets/projects/the-spot-exam.webp',
-      imageAlt:
-        'The Spot Exam - Online Examination & AI Proctoring Platform interface',
+      video: '/video/thespotexam.mp4',
       liveUrl: 'https://thespotexam.com',
       // Private company repository at Tech Creature Solutions - hidden per instructions
       repositoryUrl: undefined,
@@ -90,8 +89,7 @@ export const selectedWorkData: SelectedWorkData = {
         'GSAP',
         'Cloudinary',
       ],
-      image: '/assets/projects/aura-headphones.webp',
-      imageAlt: 'AURA Headphones - Luxury Audio E-Commerce Storefront',
+      video: '/video/auraheadphone.mp4',
       liveUrl: 'https://auraheadphones.vercel.app',
       repositoryUrl: 'https://github.com/LekhrajMahajan/AURAHEADPHONES',
       scrollPreview: false,

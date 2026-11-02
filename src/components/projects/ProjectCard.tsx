@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import type { ProjectItem } from '../../data/projects';
 import SkillIcon from '../skills/SkillIcon';
@@ -112,48 +112,65 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
   const isReversed = index % 2 === 1;
   const displayNumber = String(index + 1).padStart(2, '0');
 
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+
   const frameRef = useRef<HTMLDivElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const zoneRef = useRef<HTMLDivElement>(null);
   const lensWrapRef = useRef<HTMLDivElement>(null);
   const cloneContentRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const handleLoadedMetadata = () => {
+      if (video.currentTime === 0) {
+        video.currentTime = 0.001;
+      }
+    };
+    video.addEventListener('loadedmetadata', handleLoadedMetadata);
+    return () => {
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+    };
+  }, []);
+
   const handlePointerEnter = () => {
     if (prefersReducedMotion()) return;
-    const frame = frameRef.current;
-    const img = imgRef.current;
-    if (!frame || !img) return;
+    const video = videoRef.current;
 
-    const overflow = img.scrollHeight - frame.clientHeight;
-    if (overflow > 15 || project.scrollPreview) {
-      gsap.to(img, {
-        y: -overflow,
-        duration: Math.max(1.8, overflow / 120),
-        ease: 'power1.inOut',
-        overwrite: 'auto',
-      });
-    } else {
-      gsap.to(img, {
-        scale: 1.05,
-        duration: 0.5,
-        ease: 'power2.out',
-        overwrite: 'auto',
-      });
+    if (video) {
+      setIsPlaying(true);
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          video.muted = true;
+          video.play().catch(() => {});
+        });
+      }
     }
   };
 
   const handlePointerLeave = () => {
     if (prefersReducedMotion()) return;
-    const img = imgRef.current;
-    if (!img) return;
+    const video = videoRef.current;
 
-    gsap.to(img, {
-      y: 0,
-      scale: 1,
-      duration: 0.6,
-      ease: 'power2.out',
-      overwrite: 'auto',
-    });
+    if (video) {
+      setIsPlaying(false);
+      video.pause();
+    }
+  };
+
+  const handleMediaClick = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      setIsPlaying(true);
+      video.play().catch(() => {});
+    } else {
+      setIsPlaying(false);
+      video.pause();
+    }
   };
 
   // Optical Magnifying Glass Event Handlers
@@ -245,7 +262,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
       <div
         onPointerEnter={handlePointerEnter}
         onPointerLeave={handlePointerLeave}
-        className={`relative bg-[#161616]/4 p-3 sm:p-4 rounded-2xl lg:rounded-3xl lg:w-[46%] xl:w-[48%] shrink-0 flex flex-col justify-center ${
+        className={`relative bg-[#161616]/4 p-3 sm:p-4 pt-14 sm:pt-14 lg:p-4 rounded-2xl lg:rounded-3xl lg:w-[46%] xl:w-[48%] shrink-0 flex flex-col justify-center ${
           isReversed ? 'lg:order-2' : ''
         }`}
       >
@@ -263,21 +280,39 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
           </div>
         )}
 
-        {/* Clipped Image Container with Optimized Compact Height */}
+        {/* Clipped Media Container with Exact Matching Video Size & Aspect Ratio */}
         <div
           ref={frameRef}
-          className="project-card-image-wrap w-full h-44 sm:h-64 md:h-76 lg:h-[350px] xl:h-[380px] overflow-hidden rounded-[18px] border border-[#161616]/10 bg-white shadow-inner"
+          onClick={handleMediaClick}
+          className="project-card-image-wrap relative w-full aspect-[1280/610] overflow-hidden rounded-[18px] border border-[#161616]/10 bg-white flex items-center justify-center shadow-inner cursor-pointer select-none"
         >
-          <img
-            ref={imgRef}
-            src={project.image}
-            alt={project.imageAlt}
-            width={800}
-            height={450}
-            className="project-card-image h-full w-full object-cover object-top select-none will-change-transform"
-            loading="lazy"
-            decoding="async"
-          />
+          {/* Direct Live Video (Muted, auto-plays on hover, pauses on leave, exact container fit) */}
+          {project.video && (
+            <video
+              ref={videoRef}
+              src={`${project.video}#t=0.001`}
+              muted
+              playsInline
+              loop
+              preload="auto"
+              aria-label={`${project.title} live video preview`}
+              className="w-full h-full object-cover select-none pointer-events-none"
+            />
+          )}
+
+          {/* Subtle Live Preview Status Indicator Badge */}
+          {project.video && (
+            <div
+              className={`absolute bottom-3 right-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-[#161616]/85 backdrop-blur-xs px-2.5 py-1 font-['Poppins'] text-[10px] font-semibold text-[#e5e3dc] shadow-sm select-none transition-all duration-300 ${
+                isPlaying
+                  ? 'opacity-0 translate-y-1 pointer-events-none'
+                  : 'opacity-85 translate-y-0 group-hover:opacity-100'
+              }`}
+            >
+              <span className="size-1.5 rounded-full bg-[#bf4a1a] animate-pulse" />
+              <span>HOVER TO PREVIEW</span>
+            </div>
+          )}
         </div>
       </div>
 
